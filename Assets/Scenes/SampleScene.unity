@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,9 +156,12 @@ MonoBehaviour:
   - {fileID: 1421433746022104, guid: 84bb406b82cecb24cb1ffe5d4359339d, type: 3}
   - {fileID: 1681277682126416, guid: bbad862e7e06efe4a8ad0346a53e3cde, type: 3}
   - {fileID: 1282587026986886, guid: 7446a392a730ac14d9cc70d21cf7ace0, type: 3}
-  - {fileID: 1573730805894322, guid: 2224b63330275e5478ef024b2913f937, type: 3}
-  mapWidth: 50
-  mapHeight: 50
+  mapWidth: 20
+  mapHeight: 20
+  xStreet: {fileID: 6517029399397076635, guid: de09de8e9e512469590eafd58a33c1bd, type: 3}
+  zStreet: {fileID: 8849533472232358064, guid: 2d869abe6d37e481e892b79975b5c3f0, type: 3}
+  crossRoad: {fileID: 6217379937928807132, guid: 313fd9ea3ef5347b8a66766ff29a43b4,
+    type: 3}
 --- !u!4 &339848492
 Transform:
   m_ObjectHideFlags: 0
@@ -397,7 +400,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63acc94d84e3bb241b4b3baa3222ae55, type: 2}
+  - {fileID: 2100000, guid: 8b3087ce8cc0049aabc2711ab3f66dae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -435,7 +438,7 @@ Transform:
   m_GameObject: {fileID: 1777284107}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1000, y: 1, z: 1000}
+  m_LocalScale: {x: 300, y: 300, z: 300}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
