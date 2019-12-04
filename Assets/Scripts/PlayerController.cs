@@ -2,42 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
-    public LayerMask movementMask;
-    Camera cam;
-    PlayerMotor motor;
+    public float walkSpeed = 2f;
+    public float runSpeed = 6f;
+
+    public float turnSmoothTime = 1f;
+    float turnSmoothVelo;
+    public float speedSmoothTime = 1.1f;
+    float speedSmoothVelo; 
+    float currentSpeed;
+
+    Animator animator;
+
+    Transform cameraT;
+
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
-        motor = GetComponent<PlayerMotor>();
+        animator = GetComponentInChildren<Animator>();
+        cameraT = Camera.main.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+       Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+       Vector2 inputDir = input.normalized;
 
-            if (Physics.Raycast(ray, out hit, 100, movementMask)) {
-                motor.MoveToPoint(hit.point);
-                // Move our player to what we hit
-            }
+        if(inputDir != Vector2.zero){
+            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraT.eulerAngles.y;
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation,ref turnSmoothVelo, turnSmoothTime);
         }
-         if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100)) {
-                motor.MoveToPoint(hit.point);
-                // Check if we hit something that's interactable
-                // set it as our focus
-            }
-        }
+        bool running = Input.GetKey(KeyCode.LeftShift);
+        float targetSpeed = ((running)?runSpeed:walkSpeed) * inputDir.magnitude;
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelo, speedSmoothTime);
+
+        transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World); 
+
+        float animationSpeedPercent = ((running)?1:.5f) * inputDir.magnitude;
+        animator.SetFloat("speedPercent", animationSpeedPercent, speedSmoothTime, Time.deltaTime);
+
     }
 }

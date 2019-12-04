@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    float yaw;
+    float pitch;
+    public float sensitivity = 10f;
     public Transform target;
-    public Vector3 offset;
-    private float currentZoom = 10f;
-    public float pitch = 2f;
-    public float zoomSpeed = 4f;
-    public float minZoom = 5f;
-    public float maxZoom = 15f;
-    public float yawSpeed = 100f;
-    private float currentYaw = 0f;
+    public float distanceFromTarget = 2f;
+    public Vector2 pitchMinMax = new Vector2 (-35, 30);
 
-    private void Update() {
-        currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-        currentYaw += Input.GetAxis("Horizontal") * yawSpeed * Time.deltaTime;
-    }
+    public float rotSmoothTime = .12f;
+    Vector3 rotSmoothVelo;
+    Vector3 currentRot;
 
     private void LateUpdate() {
-        transform.position = target.position - offset * currentZoom;
-        transform.LookAt(target.position + Vector3.up * pitch);
-        transform.RotateAround(target.position, Vector3.up, currentYaw);
+        yaw += Input.GetAxis ("Mouse X") * sensitivity;
+        pitch -= Input.GetAxis("Mouse Y") * sensitivity;
+        pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
+
+        currentRot = Vector3.SmoothDamp(currentRot, new Vector3 (pitch, yaw), ref rotSmoothVelo, rotSmoothTime);
+        transform.eulerAngles = currentRot;
+
+        transform.position = target.position - transform.forward * distanceFromTarget;
+
     }
 }
