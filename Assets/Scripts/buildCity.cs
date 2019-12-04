@@ -14,6 +14,7 @@ public class buildCity : MonoBehaviour
     public GameObject zStreet;
     public GameObject crossRoad;
     private int[,] mapGrid;
+    int footprint = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class buildCity : MonoBehaviour
                 for(int h = 0; h < mapHeight; h++) {
                     mapGrid[x,h] = -1;
                 }
-                x += Random.Range(3,5);
+                x += Random.Range(3,3);
                 if(x >= mapWidth) break;
             }
 
@@ -52,60 +53,41 @@ public class buildCity : MonoBehaviour
                         mapGrid[w,z] = -2;
                     }
                 }
-                z += Random.Range(2,20);
+                z += Random.Range(5,20);
                 if(z >= mapHeight) break;
             }
-
-
 
             // Generate City
             for (int h = 0; h < mapHeight; h++) {
                 for (int w = 0; w < mapWidth; w++) {
                     int result = mapGrid[w,h];
+                    Vector3 pos = new Vector3(w * footprint, 0, h * footprint);
                     if(result < -2) {
-                        Vector3 size = crossRoad.GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 streetPos = new Vector3(w * 20, 0, h* 20);
-                        Instantiate(crossRoad, streetPos, crossRoad.transform.rotation);
+                        Instantiate(crossRoad, pos, crossRoad.transform.rotation);
                     }
                     else if (result < -1) {
-                        Vector3 size = xStreet.GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 streetPos = new Vector3(w* 20, 0, h* 20);
-                        Instantiate(xStreet, streetPos, xStreet.transform.rotation);
+                        Instantiate(xStreet, pos, xStreet.transform.rotation);
                     }
                     else if (result < 0) {
-                        Vector3 size = zStreet.GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 streetPos = new Vector3(w* 20,0,h* 20);
-                        Instantiate(zStreet, streetPos, zStreet.transform.rotation);
+                        Instantiate(zStreet, pos, zStreet.transform.rotation);
                     }
-                    if (result < 1) {
-                        Vector3 size = buildings[4].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w* size.z,0,h* size.z);
-                        Instantiate(buildings[4], buildingPos, Quaternion.identity);
+                    else if (result < 1) {
+                        Instantiate(buildings[0], pos, Quaternion.identity);
                         }
-                    else if (result < 2) {
-                        Vector3 size = buildings[3].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w * size.x + 5 ,0,h * size.x + 5);
-                        Instantiate(buildings[3], buildingPos, Quaternion.identity);
+                    else if (result < 2){
+                        Instantiate(buildings[1], pos, Quaternion.identity);
                         }
                     else if (result < 4) {
-                        Vector3 size = buildings[2].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w * 20,0,h * 20);
-                        Instantiate(buildings[2], buildingPos, Quaternion.identity);
+                        Instantiate(buildings[2], pos, Quaternion.identity);
                         }
                     else if (result < 6) {
-                        Vector3 size = buildings[1].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w * 20,0,h * 20);
-                        Instantiate(buildings[1], buildingPos, Quaternion.identity);
+                        Instantiate(buildings[3], pos, Quaternion.identity);
                         }
                     else if (result < 7) {
-                        Vector3 size = buildings[0].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w * 20,0,h * 20);
-                        Instantiate(buildings[0], buildingPos, Quaternion.identity);
+                        Instantiate(buildings[4], pos, Quaternion.identity);
                         }
                     else if (result < 10) {
-                        Vector3 size = buildings[5].GetComponentInChildren<Renderer>().bounds.size;
-                        Vector3 buildingPos = new Vector3(w * 20,0,h * 20);
-                        Instantiate(buildings[5], buildingPos, Quaternion.identity);
+                        Instantiate(buildings[5], pos, Quaternion.identity);
                         }
             }
         }
