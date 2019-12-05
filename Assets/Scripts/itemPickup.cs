@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 
-public class itemPickup : Interactable
+public class ItemPickup : Interactable
 {
-    public Item item;
-    
-    public override void Interact() {
-        base.Interact();
+    public Item Item;        
+    CharacterStats myStats;
 
+    void Start() {
+        myStats = GetComponent<CharacterStats>();
+    }
+
+    public override void Interact(){
+        base.Interact();
         PickUp();
     }
 
     void PickUp () {
-        Debug.Log("Picked Up Heart");
+        myStats.giveHealth(10);
+        Debug.Log("health is: " + myStats.health);
         Destroy(gameObject);
     }
 }
