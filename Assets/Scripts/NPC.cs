@@ -5,13 +5,13 @@ using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
-    // private NavMeshAgent = _agent;
+    private NavMeshAgent agent;
     public GameObject player;
     public float npcRunDistance = 4.0f;
 
     void Start()
     {
-        // _agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -22,7 +22,7 @@ public class NPC : MonoBehaviour
         if(dist < npcRunDistance) {
             Vector3 distToPlayer = transform.position - player.transform.position;
             Vector3 newPos = transform.position + distToPlayer;
-            // _agent.SetDestination(newPos);
+            agent.SetDestination(newPos);
         }
     }
 }

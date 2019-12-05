@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class ItemPickup : Interactable
-{
-    public Item Item;        
+{  
     CharacterStats myStats;
 
     void Start() {
